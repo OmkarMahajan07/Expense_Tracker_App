@@ -7,9 +7,6 @@ tracking personal spending. The application is intentionally kept lightweight:
 it does not use a database or authentication layer, and it stores everything in
 simple Python lists that live in memory while the server is running.
 
-It works well as a practice project, a live coding sample for interviews, or a
-starting point if you want to explore how Flask handles forms and routing.
-
 ---
 
 ## What you can do with it
