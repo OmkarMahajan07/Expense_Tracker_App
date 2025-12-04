@@ -135,6 +135,33 @@ def add_expense_form():
     return render_template("add_expense.html", users=users, categories=categories)
 
 
+@app.route("/all_expenses", methods=["GET"])
+def all_expenses_view():
+    """
+    Show a flat list of every recorded expense, ignoring month and budget.
+    """
+    enriched = []
+    for e in expenses:
+        user_name = next((u["username"] for u in users if u["id"] == e["user_id"]), "Unknown")
+        category_name = next(
+            (c["name"] for c in categories if c["id"] == e["category_id"]), "Unlabelled"
+        )
+        enriched.append(
+            {
+                "id": e["id"],
+                "user": user_name,
+                "category": category_name,
+                "amount": e["amount"],
+                "description": e.get("description") or "",
+                "date": e.get("date") or "",
+            }
+        )
+
+    # Newest first makes it easier to see recent activity.
+    enriched.sort(key=lambda row: row["id"], reverse=True)
+    return render_template("all_expenses.html", expenses=enriched)
+
+
 # ---------------------------------------------------------------------------
 # Budgets
 # ---------------------------------------------------------------------------

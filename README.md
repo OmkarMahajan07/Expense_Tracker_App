@@ -18,6 +18,8 @@ simple Python lists that live in memory while the server is running.
   threshold (percentage of the budget that, once reached, should start warning).
 - View a monthly breakdown that compares spending against budgets and marks
   each category as **OK**, **NEAR LIMIT**, or **EXCEEDED**.
+- Browse an **all‑expenses** table that lists every recorded expense across
+  users, categories, and months.
 
 All interaction happens through standard HTML pages rendered by Flask—there is
 no JavaScript framework or separate API consumer involved.
@@ -68,6 +70,8 @@ Then open `http://127.0.0.1:5000/` in your browser as usual.
   percentage for a given user+category pair.
 - **View monthly summary** – choose a user and month; the app aggregates all
   recorded expenses and shows how they compare to any budgets you have set.
+- **All expenses** – open a flat table of every expense recorded in the system,
+  regardless of month or budget configuration.
 
 Because storage is in memory only, data is cleared every time you stop and
 restart the Flask process.
