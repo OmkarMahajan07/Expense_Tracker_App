@@ -1,49 +1,112 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <title>Log Expense</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body class="p-4">
-    <h2>Log Expense</h2>
-    <form method="POST" class="mb-4">
+  <head>
+    <meta charset="utf-8" />
+    <title>Capture an Expense</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        background: radial-gradient(circle at top left, #eef2ff, #f9fafb);
+      }
+
+      .btn {
+        border-radius: 999px;
+        font-weight: 500;
+      }
+
+      .btn-success {
+        background-color: #059669;
+        border-color: #059669;
+      }
+
+      .btn-success:hover {
+        background-color: #047857;
+        border-color: #047857;
+      }
+
+      .btn-outline-secondary {
+        border-radius: 999px;
+        background-color: #f3f4f6;
+        color: #374151;
+        border-color: #d1d5db;
+      }
+
+      .btn-outline-secondary:hover {
+        background-color: #e5e7eb;
+        color: #111827;
+        border-color: #9ca3af;
+      }
+    </style>
+  </head>
+  <body class="p-4 bg-light">
+    <main class="container">
+      <h2 class="mb-3">Log a new expense</h2>
+      <p class="text-muted">
+        Pick who spent the money, what it was for, and how much it cost.
+      </p>
+
+      <form method="POST" class="mb-4 mt-3">
         <div class="mb-3">
-            <label class="form-label">User:</label>
-            <select name="user_id" required class="form-select">
-                {% for u in users %}
-                <option value="{{u.id}}">{{u.username}}</option>
-                {% endfor %}
-            </select>
+          <label class="form-label">User</label>
+          <select name="user_id" required class="form-select">
+            <option value="" disabled selected hidden>Select a user</option>
+            {% for u in users %}
+            <option value="{{ u.id }}">{{ u.username }}</option>
+            {% endfor %}
+          </select>
         </div>
+
         <div class="mb-3">
-            <label class="form-label">Category:</label>
-            <select name="category_id" required class="form-select">
-                {% for c in categories %}
-                <option value="{{c.id}}">{{c.name}}</option>
-                {% endfor %}
-            </select>
+          <label class="form-label">Category</label>
+          <select name="category_id" required class="form-select">
+            <option value="" disabled selected hidden>Select a category</option>
+            {% for c in categories %}
+            <option value="{{ c.id }}">{{ c.name }}</option>
+            {% endfor %}
+          </select>
         </div>
+
         <div class="mb-3">
-            <label class="form-label">Amount:</label>
-            <input name="amount" type="number" step="0.01" required class="form-control">
+          <label class="form-label">Amount</label>
+          <input
+            name="amount"
+            type="number"
+            step="0.01"
+            min="0.01"
+            required
+            class="form-control"
+            placeholder="0.00"
+          />
         </div>
+
         <div class="mb-3">
-            <label class="form-label">Description:</label>
-            <input name="description" class="form-control">
+          <label class="form-label">Short note (optional)</label>
+          <input
+            name="description"
+            class="form-control"
+            placeholder="Coffee with client, taxi ride, ..."
+          />
         </div>
+
         <div class="mb-3">
-            <label class="form-label">Date:</label>
-            <input name="date" type="date" class="form-control">
+          <label class="form-label">Date</label>
+          <input name="date" type="date" class="form-control" />
         </div>
-        <button class="btn btn-success">Submit</button>
-        <a href="{{ url_for('index') }}" class="btn btn-secondary">Cancel</a>
-    </form>
-    {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-        {% for category, msg in messages %}
-          <div class="alert alert-{{category}}">{{ msg }}</div>
-        {% endfor %}
-      {% endif %}
-    {% endwith %}
-</body>
+
+        <button class="btn btn-success me-2">Save expense</button>
+        <a href="{{ url_for('index') }}" class="btn btn-outline-secondary"
+          >Back to home</a
+        >
+      </form>
+
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, msg in messages %}
+      <div class="alert alert-{{ category }}">{{ msg }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+    </main>
+  </body>
 </html>
